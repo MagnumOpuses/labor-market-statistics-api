@@ -1,0 +1,20 @@
+{
+  "name": "tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "app": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "csv-parser": "^2.3.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "oracledb": "^5.0.0"
+  }
+}
