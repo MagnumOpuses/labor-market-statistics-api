@@ -7,7 +7,7 @@ async function initialize() {
         .pipe(csv())
         .on('data', (data) => results.push(data))
         .on('end', () => {
-            //console.log(results);
+           // console.log(results);
         });
     console.log(result);
     return result;

@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const webServerConfig = require('../config/web-server.js');
 const router = require('./router.js');
 
+
 let httpServer;
 
 function initialize() {
@@ -14,7 +15,6 @@ function initialize() {
         app.use(morgan('combined'));
         app.use('/statistics', router);
         app.use('/test', router); //TODO: Test should point to swagger pages
-
         httpServer.listen(webServerConfig.port)
             .on('listening', () => {
                 console.log(`Web server listening on localhost:${webServerConfig.port}`);

@@ -1,12 +1,13 @@
 const oracledb = require('oracledb');
 const dbConfig = require('../config/database.js');
 //TODO: change to https://blogs.oracle.com/oraclemagazine/using-the-callback-pattern-and-the-async-module
+
+
 async function initialize() {
     await oracledb.createPool(dbConfig.dbPool);
 }
 
 module.exports.initialize = initialize;
-
 
  async function close() {
     await oracledb.getPool().close();
@@ -37,6 +38,7 @@ function executeSQLStatement(statement, binds = [], opts = {}) {
         }
     });
 }
+
 
 hasDBConnection = async () => {
     await oracledb.ping( (error) => {

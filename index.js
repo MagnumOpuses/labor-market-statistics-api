@@ -1,6 +1,6 @@
 
 const webServer = require('./services/web-server.js');
-const database = require('./services/database.js');
+const database = require('./services/oracleDB.js');
 const kommunlankod = require('./services/kommunlankod.js');
 const dbConfig = require('./config/database.js');
 const defaultThreadPoolSize = 4;
