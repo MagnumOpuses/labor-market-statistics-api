@@ -1,18 +1,10 @@
 
 const webServer = require('./services/web-server.js');
-const database = require('./services/oracleDB.js');
-const kommunlankod = require('./services/kommunlankod.js');
-const dbConfig = require('./config/database.js');
-const defaultThreadPoolSize = 4;
-// Increase thread pool size by poolMax
-process.env.UV_THREADPOOL_SIZE = dbConfig.dbPool.poolMax + defaultThreadPoolSize;
 
 async function startup() {
     console.log('Starting application');
-    //TODO: Remove password output from logs
-    console.log(dbConfig.dbPool);
-
-    try {
+//TODO: Perhaps later...
+    /*try {
         console.log('Initializing kommunlankod module');
         let results = await kommunlankod.initialize();
         console.log(results);
@@ -20,14 +12,17 @@ async function startup() {
         console.error(err);
         process.exit(1); // Non-zero failure code
     }
+     */
 
-    try {
+   /* try {
         console.log('Initializing database module');
         await database.initialize();
     } catch (err) {
         console.error(err);
         process.exit(1); // Non-zero failure code
     }
+
+    */
 
     try {
         console.log('Initializing web server module');

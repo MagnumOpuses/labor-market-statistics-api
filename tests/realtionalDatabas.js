@@ -1,21 +1,25 @@
 const oracledb = require('oracledb');
-const dbConfig = require('../config/database.js');
-//TODO: change to https://blogs.oracle.com/oraclemagazine/using-the-callback-pattern-and-the-async-module
+
+startup = async () => {
+    try {
+        console.log('Initializing database module');
+        //TODO: remove hard coded to be fetched environment.
+        await oracledb.createPool({
+            user: "publik_api",
+            password: "aH72G15apI",
+            connectString: "dwdb.ams.se/dw"});
+    } catch (err) {
+        console.error(err);
+        process.exit(1); // Non-zero failure code
+    }
+};
 
 
-async function initialize() {
-    await oracledb.createPool(dbConfig.dbPool);
-}
-
-module.exports.initialize = initialize;
-
- async function close() {
+close = async () => {
     await oracledb.getPool().close();
-}
+};
 
-module.exports.close = close;
-
-function executeSQLStatement(statement, binds = [], opts = {}) {
+executeSQLStatement = (statement, binds = [], opts = {})  => {
     //executeMany(), http://oracle.github.io/node-oracledb/doc/api.html#executeoptions
     return new Promise(async (resolve, reject) => {
         let conn;
@@ -37,15 +41,6 @@ function executeSQLStatement(statement, binds = [], opts = {}) {
             }
         }
     });
-}
-
-
-hasDBConnection = async () => {
-    await oracledb.ping( (error) => {
-        console.log(error);
-        return false;
-    });
-    return true;
 };
-module.exports.isDBWorking = hasDBConnection;
-module.exports.executeSQLStatement = executeSQLStatement;
+
+//TODO: Select MONTH distinct from DB and use it to fetch data in chunks.
