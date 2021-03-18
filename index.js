@@ -1,5 +1,6 @@
 
 const webServer = require('./services/web-server.js');
+const MongoDBConfig = require('./config/mongodb')
 
 async function startup() {
     console.log('Starting application');
@@ -14,15 +15,14 @@ async function startup() {
     }
      */
 
-   /* try {
+    try {
         console.log('Initializing database module');
-        await database.initialize();
+        console.log(MongoDBConfig.dumpConfig());
     } catch (err) {
         console.error(err);
         process.exit(1); // Non-zero failure code
     }
 
-    */
 
     try {
         console.log('Initializing web server module');

@@ -5,7 +5,21 @@ Labor market statistics from the Swedish Public Employment Service
 Rest-API för detaljerade sökningar och samanställningar av statistik. 
 Gäller arbetssökande och lediga platse se ref. [1] och [2]
 
+# Docker 
+## MongoDB
 
+## Mongo Express
+
+## Statistics Import
+
+## Statistic API
+
+
+### Running on localhost
+Configuration in local .env-file
+```docker
+> docker run -p 3000:3000 --env-file .env --network mongo-network --name stat-api labor-market-stat-api 
+```
 
 ## References
 [1] https://arbetsformedlingen.se/statistik/sok-statistik   

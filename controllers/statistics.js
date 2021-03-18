@@ -1,3 +1,7 @@
+/**
+ * Indended to server direct http requests
+ */
+
 const mongoDB = require('../services/mongoDB');
 const arbetsmarknadsData = async (req, res, next) => {
     try {
