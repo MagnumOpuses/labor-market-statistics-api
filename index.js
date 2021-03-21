@@ -49,7 +49,7 @@ async function shutdown(e) {
 
     try {
         console.log('Closing database module');
-        await database.close();
+        if(database) await database.close();
     } catch (e) {
         console.log('Encountered error', e);
         err = err || e;

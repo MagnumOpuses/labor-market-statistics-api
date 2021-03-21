@@ -154,7 +154,7 @@ const fixMatchRequestPipeline = (manad, lanskod, kommunkod, koen, ung_vuxen, til
 
 //TODO: add more parameters kon, fodelseland, more...
 const findSokandeTotalt = async (manad, lanskod = null, kommunkod = null, koen=null,  ung_vuxen=null, tillhor_etablering=null, fodelselandsgrupp=null) => {
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri,{ useUnifiedTopology: true });
     try {
         await client.connect();
         const aggCursor = client.db("statistik")
@@ -173,7 +173,7 @@ const findSokandeTotalt = async (manad, lanskod = null, kommunkod = null, koen=n
 
 const findPlatserTotalt = async (manad, lanskod = null, kommunkod = null
                                  , koen= null, ung_vuxen= null, tillhor_etablering= null, fodelselandsgrupp= null) => {
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri,{ useUnifiedTopology: true });
     try {
         await client.connect();
         const aggCursor = client.db("statistik")
@@ -216,7 +216,7 @@ class FindRequestFixer{
 
 //TODO: It's possible to filter the answer directly in MongoDB request.
 const sokande = async (args) => {
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
         const cursor = client.db("statistik")
@@ -231,7 +231,7 @@ const sokande = async (args) => {
     }
 };
 const arbetskraft = async (args) => {
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
         const cursor = client.db("statistik")
@@ -246,7 +246,7 @@ const arbetskraft = async (args) => {
     }
 };
 const plats = async (args) => {
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
         const cursor = client.db("statistik")
@@ -262,7 +262,7 @@ const plats = async (args) => {
 };
 //TODO: Create a new response type, don't use the old one....
 const getArbetsmarknadsdata = async (args) =>{
-    const client = new MongoClient(MongoDBConfig.config.default_uri);
+    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
       let retVal =  await fetchArbetsmarknadsData(args.Parameters.MANAD,args.Parameters.LANSKOD,args.Parameters.KOMMUNKOD);
       return retVal;
