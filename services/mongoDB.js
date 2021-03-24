@@ -157,7 +157,7 @@ const findSokandeTotalt = async (manad, lanskod = null, kommunkod = null, koen=n
     const client = new MongoClient(MongoDBConfig.config.default_uri,{ useUnifiedTopology: true });
     try {
         await client.connect();
-        const aggCursor = client.db("statistik")
+        const aggCursor = client.db(MongoDBConfig.config.dbName)
             .collection("sokande")
             .aggregate(fixMatchRequestPipeline(manad, lanskod, kommunkod, koen, ung_vuxen, tillhor_etablering, fodelselandsgrupp))
             .sort({AFKOD: 1, _id: 1});
@@ -176,7 +176,7 @@ const findPlatserTotalt = async (manad, lanskod = null, kommunkod = null
     const client = new MongoClient(MongoDBConfig.config.default_uri,{ useUnifiedTopology: true });
     try {
         await client.connect();
-        const aggCursor = client.db("statistik")
+        const aggCursor = client.db(MongoDBConfig.config.dbName)
             .collection("platser")
             .aggregate(fixMatchRequestPipeline(manad, lanskod, kommunkod
                 , koen, ung_vuxen, tillhor_etablering, fodelselandsgrupp))
@@ -219,7 +219,7 @@ const sokande = async (args) => {
     const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
-        const cursor = client.db("statistik")
+        const cursor = client.db(MongoDBConfig.config.dbName)
             .collection("sokande")
             .find( new FindRequestFixer(args.Parameters.MANAD,args.Parameters.LANSKOD,args.Parameters.KOMMUNKOD
         ,args.Parameters.KOEN, args.Parameters.UNG_VUXEN, args.Parameters.TILLHOR_ETABLERING, args.Parameters.FODELSELANDSGRUPP).fix());
@@ -234,7 +234,7 @@ const arbetskraft = async (args) => {
     const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
-        const cursor = client.db("statistik")
+        const cursor = client.db(MongoDBConfig.config.dbName)
             .collection("arbetskraft")
             .find( new FindRequestFixer(args.Parameters.MANAD,args.Parameters.LANSKOD,args.Parameters.KOMMUNKOD
                 ,args.Parameters.KOEN, args.Parameters.UNG_VUXEN, args.Parameters.TILLHOR_ETABLERING, args.Parameters.FODELSELANDSGRUPP).fix());
@@ -249,7 +249,7 @@ const plats = async (args) => {
     const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
         await client.connect();
-        const cursor = client.db("statistik")
+        const cursor = client.db(MongoDBConfig.config.dbName)
             .collection("platser")
             .find( new FindRequestFixer(args.Parameters.MANAD,args.Parameters.LANSKOD,args.Parameters.KOMMUNKOD
                 ,args.Parameters.KOEN, args.Parameters.UNG_VUXEN, args.Parameters.TILLHOR_ETABLERING, args.Parameters.FODELSELANDSGRUPP).fix());
@@ -262,7 +262,7 @@ const plats = async (args) => {
 };
 //TODO: Create a new response type, don't use the old one....
 const getArbetsmarknadsdata = async (args) =>{
-    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
+    //const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
     try{
       let retVal =  await fetchArbetsmarknadsData(args.Parameters.MANAD,args.Parameters.LANSKOD,args.Parameters.KOMMUNKOD);
       return retVal;
@@ -270,14 +270,41 @@ const getArbetsmarknadsdata = async (args) =>{
         console.log(e)
     }
 };
-module.exports = {findSokandeTotalt, findPlatserTotalt, sokande, arbetskraft, plats, getArbetsmarknadsdata, fetchArbetsmarknadsData};
-/*(async function() {
+
+const getAllMonthSorted = async () => {
+    const client = new MongoClient(MongoDBConfig.config.default_uri, { useUnifiedTopology: true });
+    try{
+        await client.connect();
+      let retVal =  client.db(MongoDBConfig.config.dbName).collection("platser").distinct("MANAD");
+      return (await retVal).sort(stringMonthSorterHelp).reverse();
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const stringMonthSorterHelp = (a, b) =>{
+    //a and b are strings
+    let key1 = new Date(a); 
+    let key2 = new Date(b);
+    if( key1 < key2){
+        return -1;
+    } else if(key1 == key2){
+        return 0;
+    } else {
+        return 1;
+    }
+}
+module.exports = { getAllMonthSorted, findSokandeTotalt, findPlatserTotalt, sokande, arbetskraft, plats, getArbetsmarknadsdata, fetchArbetsmarknadsData};
+//(async function() {
+    //console.log(MongoDBConfig.dumpConfig());
     // console.log(await findSokandeTotalt('2020-11', '01'));
      //console.log(await findPlatserTotalt('2020-11', '01'));
-    console.log(await sokande("2020-10"));
-})();
+   // console.log(await sokande("2020-10"));
+   //console.log(await getAllMonthSorted());
+//})();
 
- */
+
 
 
 

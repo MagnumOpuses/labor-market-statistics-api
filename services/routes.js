@@ -35,4 +35,6 @@ module.exports.setup =  (app) =>{
      *       path:
      *         type: string
      */
+
+    app.get('/statistics/months', stats.allMonthInDataset);
 };

@@ -8,7 +8,7 @@ const config=
         host: process.env.MONGO_HOST,
         dbName: process.env.MONGO_DB_NAME,
         default_uri: "mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASSWORD+"@"+ process.env.MONGO_HOST + ":" + process.env.MONGO_PORT + "/" + process.env.MONGO_DB_NAME,
-        api_url: process.env.SWAGGER_API_URL, //TODO: This shouldn't be here
+        api_url: process.env.SWAGGER_API_URL, //TODO: This shouldn't be here, extract host dynamic
     }
 
 dumpConfig = () =>{
@@ -21,5 +21,4 @@ dumpConfig = () =>{
 module.exports = {
     config,
     dumpConfig
-    //uri: 'mongodb://statuser:kalle123@mongodb:27017/statistik'
 };

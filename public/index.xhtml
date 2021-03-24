@@ -1,77 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
+  <script src="scripts/stat.js"></script>
+  <head>
     <title>Arbetsmarknadsstatistik</title>
     <style type="text/css">
-        body{
-
-        }
-        .center {
-            position: absolute;
-            left: 50%;
-            top: 40%;
-            transform: translate(-50%, -45%);
-            border: 5px solid darkolivegreen;
-            padding:50px 40px 40px 50px;
-            margin: 40px;
-            overflow-y:auto;
-            height: 400px;
-        }
-        .lan   {color: darkolivegreen; }
-        .listHead {font-size: xx-large; color: dimgrey}
-        .kommun    {color: gray;}
+      .center {
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -45%);
+        border: 5px solid darkolivegreen;
+        padding: 50px 40px 40px 50px;
+        margin: 40px;
+        overflow-y: auto;
+        height: 400px;
+      }
+      .lan {
+        color: darkolivegreen;
+      }
+      .listHead {
+        font-size: xx-large;
+        color: dimgrey;
+      }
+      .kommun {
+        color: gray;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div>
+      <div class="listHead"></div>
+      <div>
+        <label for="selectMonth">Välj månad</label>
+        <select id="selectMonth" onchange="updateLinkList();"></select>
+      </div>
 
-<div id="linklist" class="center">
-    <div class="listHead">Statistik länkar</div>
-</div>
-
-
-<script type="application/javascript">
-let manad = '2020-11';
-    function createAnchorEntry(className, text, paramString) {
-        // Create anchor element.
-        var a = document.createElement('a');
-        var div = document.createElement("div");
-        a.className = className;
-        div.append(a);
-        // Create the text node for anchor element.
-        var link = document.createTextNode(text);
-        // Append the text node to anchor element.
-        a.appendChild(link);
-        // Set the href property.
-        a.href = "/statistics/arbetsmarknadsdata?" + paramString;
-        return div;
-    }
-
-    function addAnchorList(manad, jsonList, elementId) {
-
-        let url = "/statistics/arbetsmarknadsdata";
-        jsonList.forEach((data, index) => {
-            console.log(manad);
-            if (data.Code.length === 2) {
-                elementId.insertAdjacentHTML('beforeend', "&lt;hr />");
-                elementId.insertAdjacentElement('beforeend', createAnchorEntry("lan",data.Name, `manad=${manad}&amp;lanskod=${data.Code}`));
-                elementId.insertAdjacentHTML('beforeend', "&lt;hr />");
-            } else {
-                elementId.insertAdjacentElement('beforeend', createAnchorEntry("kommun", data.Name, `manad=${manad}&amp;kommunkod=${data.Code}`));
-            }
-        })
-    }
-
-    // TODO Get this from rest endpoint
-    let tempList = [{"Code":"01","Name":"Stockholms län"},{"Code":"0114","Name":"Upplands Väsby"},{"Code":"0115","Name":"Vallentuna"},{"Code":"0117","Name":"Österåker"},{"Code":"0120","Name":"Värmdö"},{"Code":"0123","Name":"Järfälla"},{"Code":"0125","Name":"Ekerö"},{"Code":"0126","Name":"Huddinge"},{"Code":"0127","Name":"Botkyrka"},{"Code":"0128","Name":"Salem"},{"Code":"0136","Name":"Haninge"},{"Code":"0138","Name":"Tyresö"},{"Code":"0139","Name":"Upplands-Bro"},{"Code":"0140","Name":"Nykvarn"},{"Code":"0160","Name":"Täby"},{"Code":"0162","Name":"Danderyd"},{"Code":"0163","Name":"Sollentuna"},{"Code":"0180","Name":"Stockholm"},{"Code":"0181","Name":"Södertälje"},{"Code":"0182","Name":"Nacka"},{"Code":"0183","Name":"Sundbyberg"},{"Code":"0184","Name":"Solna"},{"Code":"0186","Name":"Lidingö"},{"Code":"0187","Name":"Vaxholm"},{"Code":"0188","Name":"Norrtälje"},{"Code":"0191","Name":"Sigtuna"},{"Code":"0192","Name":"Nynäshamn"},{"Code":"03","Name":"Uppsala län"},{"Code":"0305","Name":"Håbo"},{"Code":"0319","Name":"Älvkarleby"},{"Code":"0330","Name":"Knivsta"},{"Code":"0331","Name":"Heby"},{"Code":"0360","Name":"Tierp"},{"Code":"0380","Name":"Uppsala"},{"Code":"0381","Name":"Enköping"},{"Code":"0382","Name":"Östhammar"},{"Code":"04","Name":"Södermanlands län"},{"Code":"0428","Name":"Vingåker"},{"Code":"0461","Name":"Gnesta"},{"Code":"0480","Name":"Nyköping"},{"Code":"0481","Name":"Oxelösund"},{"Code":"0482","Name":"Flen"},{"Code":"0483","Name":"Katrineholm"},{"Code":"0484","Name":"Eskilstuna"},{"Code":"0486","Name":"Strängnäs"},{"Code":"0488","Name":"Trosa"},{"Code":"05","Name":"Östergötlands län"},{"Code":"0509","Name":"Ödeshög"},{"Code":"0512","Name":"Ydre"},{"Code":"0513","Name":"Kinda"},{"Code":"0560","Name":"Boxholm"},{"Code":"0561","Name":"Åtvidaberg"},{"Code":"0562","Name":"Finspång"},{"Code":"0563","Name":"Valdemarsvik"},{"Code":"0580","Name":"Linköping"},{"Code":"0581","Name":"Norrköping"},{"Code":"0582","Name":"Söderköping"},{"Code":"0583","Name":"Motala"},{"Code":"0584","Name":"Vadstena"},{"Code":"0586","Name":"Mjölby"},{"Code":"06","Name":"Jönköpings län"},{"Code":"0604","Name":"Aneby"},{"Code":"0617","Name":"Gnosjö"},{"Code":"0642","Name":"Mullsjö"},{"Code":"0643","Name":"Habo"},{"Code":"0662","Name":"Gislaved"},{"Code":"0665","Name":"Vaggeryd"},{"Code":"0680","Name":"Jönköping"},{"Code":"0682","Name":"Nässjö"},{"Code":"0683","Name":"Värnamo"},{"Code":"0684","Name":"Sävsjö"},{"Code":"0685","Name":"Vetlanda"},{"Code":"0686","Name":"Eksjö"},{"Code":"0687","Name":"Tranås"},{"Code":"07","Name":"Kronobergs län"},{"Code":"0760","Name":"Uppvidinge"},{"Code":"0761","Name":"Lessebo"},{"Code":"0763","Name":"Tingsryd"},{"Code":"0764","Name":"Alvesta"},{"Code":"0765","Name":"Älmhult"},{"Code":"0767","Name":"Markaryd"},{"Code":"0780","Name":"Växjö"},{"Code":"0781","Name":"Ljungby"},{"Code":"08","Name":"Kalmar län"},{"Code":"0821","Name":"Högsby"},{"Code":"0834","Name":"Torsås"},{"Code":"0840","Name":"Mörbylånga"},{"Code":"0860","Name":"Hultsfred"},{"Code":"0861","Name":"Mönsterås"},{"Code":"0862","Name":"Emmaboda"},{"Code":"0880","Name":"Kalmar"},{"Code":"0881","Name":"Nybro"},{"Code":"0882","Name":"Oskarshamn"},{"Code":"0883","Name":"Västervik"},{"Code":"0884","Name":"Vimmerby"},{"Code":"0885","Name":"Borgholm"},{"Code":"09","Name":"Gotlands län"},{"Code":"0980","Name":"Gotland"},{"Code":"10","Name":"Blekinge län"},{"Code":"1060","Name":"Olofström"},{"Code":"1080","Name":"Karlskrona"},{"Code":"1081","Name":"Ronneby"},{"Code":"1082","Name":"Karlshamn"},{"Code":"1083","Name":"Sölvesborg"},{"Code":"12","Name":"Skåne län"},{"Code":"1214","Name":"Svalöv"},{"Code":"1230","Name":"Staffanstorp"},{"Code":"1231","Name":"Burlöv"},{"Code":"1233","Name":"Vellinge"},{"Code":"1256","Name":"Östra Göinge"},{"Code":"1257","Name":"Örkelljunga"},{"Code":"1260","Name":"Bjuv"},{"Code":"1261","Name":"Kävlinge"},{"Code":"1262","Name":"Lomma"},{"Code":"1263","Name":"Svedala"},{"Code":"1264","Name":"Skurup"},{"Code":"1265","Name":"Sjöbo"},{"Code":"1266","Name":"Hörby"},{"Code":"1267","Name":"Höör"},{"Code":"1270","Name":"Tomelilla"},{"Code":"1272","Name":"Bromölla"},{"Code":"1273","Name":"Osby"},{"Code":"1275","Name":"Perstorp"},{"Code":"1276","Name":"Klippan"},{"Code":"1277","Name":"Åstorp"},{"Code":"1278","Name":"Båstad"},{"Code":"1280","Name":"Malmö"},{"Code":"1281","Name":"Lund"},{"Code":"1282","Name":"Landskrona"},{"Code":"1283","Name":"Helsingborg"},{"Code":"1284","Name":"Höganäs"},{"Code":"1285","Name":"Eslöv"},{"Code":"1286","Name":"Ystad"},{"Code":"1287","Name":"Trelleborg"},{"Code":"1290","Name":"Kristianstad"},{"Code":"1291","Name":"Simrishamn"},{"Code":"1292","Name":"Ängelholm"},{"Code":"1293","Name":"Hässleholm"},{"Code":"13","Name":"Hallands län"},{"Code":"1315","Name":"Hylte"},{"Code":"1380","Name":"Halmstad"},{"Code":"1381","Name":"Laholm"},{"Code":"1382","Name":"Falkenberg"},{"Code":"1383","Name":"Varberg"},{"Code":"1384","Name":"Kungsbacka"},{"Code":"14","Name":"Västra Götalands län"},{"Code":"1401","Name":"Härryda"},{"Code":"1402","Name":"Partille"},{"Code":"1407","Name":"Öckerö"},{"Code":"1415","Name":"Stenungsund"},{"Code":"1419","Name":"Tjörn"},{"Code":"1421","Name":"Orust"},{"Code":"1427","Name":"Sotenäs"},{"Code":"1430","Name":"Munkedal"},{"Code":"1435","Name":"Tanum"},{"Code":"1438","Name":"Dals-Ed"},{"Code":"1439","Name":"Färgelanda"},{"Code":"1440","Name":"Ale"},{"Code":"1441","Name":"Lerum"},{"Code":"1442","Name":"Vårgårda"},{"Code":"1443","Name":"Bollebygd"},{"Code":"1444","Name":"Grästorp"},{"Code":"1445","Name":"Essunga"},{"Code":"1446","Name":"Karlsborg"},{"Code":"1447","Name":"Gullspång"},{"Code":"1452","Name":"Tranemo"},{"Code":"1460","Name":"Bengtsfors"},{"Code":"1461","Name":"Mellerud"},{"Code":"1462","Name":"Lilla Edet"},{"Code":"1463","Name":"Mark"},{"Code":"1465","Name":"Svenljunga"},{"Code":"1466","Name":"Herrljunga"},{"Code":"1470","Name":"Vara"},{"Code":"1471","Name":"Götene"},{"Code":"1472","Name":"Tibro"},{"Code":"1473","Name":"Töreboda"},{"Code":"1480","Name":"Göteborg"},{"Code":"1481","Name":"Mölndal"},{"Code":"1482","Name":"Kungälv"},{"Code":"1484","Name":"Lysekil"},{"Code":"1485","Name":"Uddevalla"},{"Code":"1486","Name":"Strömstad"},{"Code":"1487","Name":"Vänersborg"},{"Code":"1488","Name":"Trollhättan"},{"Code":"1489","Name":"Alingsås"},{"Code":"1490","Name":"Borås"},{"Code":"1491","Name":"Ulricehamn"},{"Code":"1492","Name":"Åmål"},{"Code":"1493","Name":"Mariestad"},{"Code":"1494","Name":"Lidköping"},{"Code":"1495","Name":"Skara"},{"Code":"1496","Name":"Skövde"},{"Code":"1497","Name":"Hjo"},{"Code":"1498","Name":"Tidaholm"},{"Code":"1499","Name":"Falköping"},{"Code":"17","Name":"Värmlands län"},{"Code":"1715","Name":"Kil"},{"Code":"1730","Name":"Eda"},{"Code":"1737","Name":"Torsby"},{"Code":"1760","Name":"Storfors"},{"Code":"1761","Name":"Hammarö"},{"Code":"1762","Name":"Munkfors"},{"Code":"1763","Name":"Forshaga"},{"Code":"1764","Name":"Grums"},{"Code":"1765","Name":"Årjäng"},{"Code":"1766","Name":"Sunne"},{"Code":"1780","Name":"Karlstad"},{"Code":"1781","Name":"Kristinehamn"},{"Code":"1782","Name":"Filipstad"},{"Code":"1783","Name":"Hagfors"},{"Code":"1784","Name":"Arvika"},{"Code":"1785","Name":"Säffle"},{"Code":"18","Name":"Örebro län"},{"Code":"1814","Name":"Lekeberg"},{"Code":"1860","Name":"Laxå"},{"Code":"1861","Name":"Hallsberg"},{"Code":"1862","Name":"Degerfors"},{"Code":"1863","Name":"Hällefors"},{"Code":"1864","Name":"Ljusnarsberg"},{"Code":"1880","Name":"Örebro"},{"Code":"1881","Name":"Kumla"},{"Code":"1882","Name":"Askersund"},{"Code":"1883","Name":"Karlskoga"},{"Code":"1884","Name":"Nora"},{"Code":"1885","Name":"Lindesberg"},{"Code":"19","Name":"Västmanlands län"},{"Code":"1904","Name":"Skinnskatteberg"},{"Code":"1907","Name":"Surahammar"},{"Code":"1960","Name":"Kungsör"},{"Code":"1961","Name":"Hallstahammar"},{"Code":"1962","Name":"Norberg"},{"Code":"1980","Name":"Västerås"},{"Code":"1981","Name":"Sala"},{"Code":"1982","Name":"Fagersta"},{"Code":"1983","Name":"Köping"},{"Code":"1984","Name":"Arboga"},{"Code":"20","Name":"Dalarnas län"},{"Code":"2021","Name":"Vansbro"},{"Code":"2023","Name":"Malung-Sälen"},{"Code":"2026","Name":"Gagnef"},{"Code":"2029","Name":"Leksand"},{"Code":"2031","Name":"Rättvik"},{"Code":"2034","Name":"Orsa"},{"Code":"2039","Name":"Älvdalen"},{"Code":"2061","Name":"Smedjebacken"},{"Code":"2062","Name":"Mora"},{"Code":"2080","Name":"Falun"},{"Code":"2081","Name":"Borlänge"},{"Code":"2082","Name":"Säter"},{"Code":"2083","Name":"Hedemora"},{"Code":"2084","Name":"Avesta"},{"Code":"2085","Name":"Ludvika"},{"Code":"21","Name":"Gävleborgs län"},{"Code":"2101","Name":"Ockelbo"},{"Code":"2104","Name":"Hofors"},{"Code":"2121","Name":"Ovanåker"},{"Code":"2132","Name":"Nordanstig"},{"Code":"2161","Name":"Ljusdal"},{"Code":"2180","Name":"Gävle"},{"Code":"2181","Name":"Sandviken"},{"Code":"2182","Name":"Söderhamn"},{"Code":"2183","Name":"Bollnäs"},{"Code":"2184","Name":"Hudiksvall"},{"Code":"22","Name":"Västernorrlands län"},{"Code":"2260","Name":"Ånge"},{"Code":"2262","Name":"Timrå"},{"Code":"2280","Name":"Härnösand"},{"Code":"2281","Name":"Sundsvall"},{"Code":"2282","Name":"Kramfors"},{"Code":"2283","Name":"Sollefteå"},{"Code":"2284","Name":"Örnsköldsvik"},{"Code":"23","Name":"Jämtlands län"},{"Code":"2303","Name":"Ragunda"},{"Code":"2305","Name":"Bräcke"},{"Code":"2309","Name":"Krokom"},{"Code":"2313","Name":"Strömsund"},{"Code":"2321","Name":"Åre"},{"Code":"2326","Name":"Berg"},{"Code":"2361","Name":"Härjedalen"},{"Code":"2380","Name":"Östersund"},{"Code":"24","Name":"Västerbottens län"},{"Code":"2401","Name":"Nordmaling"},{"Code":"2403","Name":"Bjurholm"},{"Code":"2404","Name":"Vindeln"},{"Code":"2409","Name":"Robertsfors"},{"Code":"2417","Name":"Norsjö"},{"Code":"2418","Name":"Malå"},{"Code":"2421","Name":"Storuman"},{"Code":"2422","Name":"Sorsele"},{"Code":"2425","Name":"Dorotea"},{"Code":"2460","Name":"Vännäs"},{"Code":"2462","Name":"Vilhelmina"},{"Code":"2463","Name":"Åsele"},{"Code":"2480","Name":"Umeå"},{"Code":"2481","Name":"Lycksele"},{"Code":"2482","Name":"Skellefteå"},{"Code":"25","Name":"Norrbottens län"},{"Code":"2505","Name":"Arvidsjaur"},{"Code":"2506","Name":"Arjeplog"},{"Code":"2510","Name":"Jokkmokk"},{"Code":"2513","Name":"Överkalix"},{"Code":"2514","Name":"Kalix"},{"Code":"2518","Name":"Övertorneå"},{"Code":"2521","Name":"Pajala"},{"Code":"2523","Name":"Gällivare"},{"Code":"2560","Name":"Älvsbyn"},{"Code":"2580","Name":"Luleå"},{"Code":"2581","Name":"Piteå"},{"Code":"2582","Name":"Boden"},{"Code":"2583","Name":"Haparanda"},{"Code":"2584","Name":"Kiruna"}]
-    let listId = document.querySelector('#linklist');
-    document.title+= ` Månad ${manad}`;
-    document.getElementsByClassName('listHead')[0].textContent += ` för År-Månad ${manad}` ;
-    addAnchorList(manad, tempList, listId);
-
-
-</script>
-</body>
+      <div id="linklist"></div>
+    </div>
+  </body>
+  <script>
+    window.onload = init();
+  </script>
 </html>

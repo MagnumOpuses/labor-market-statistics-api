@@ -14,6 +14,15 @@ const arbetsmarknadsData = async (req, res, next) => {
     }
 };
 
+const allMonthInDataset = async (req, res, next) =>{
+    try {
+        let response = await mongoDB.getAllMonthSorted();
+        res.status(200).json(response);
+    } catch (error) {
+        next(error);
+    }
+}
+
 //const getRawData()
 //TODO: refactor fetchDataFromDB put it in DB file...
-module.exports = {arbetsmarknadsData};
+module.exports = {arbetsmarknadsData, allMonthInDataset};
