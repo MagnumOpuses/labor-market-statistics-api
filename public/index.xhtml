@@ -45,13 +45,13 @@ let manad = '2020-11';
         // Append the text node to anchor element.
         a.appendChild(link);
         // Set the href property.
-        a.href = "http://localhost:3000/statistics/arbetsmarknadsdata?" + paramString;
+        a.href = "/statistics/arbetsmarknadsdata?" + paramString;
         return div;
     }
 
     function addAnchorList(manad, jsonList, elementId) {
 
-        let url = "http://localhost:3000/statistics/arbetsmarknadsdata";
+        let url = "/statistics/arbetsmarknadsdata";
         jsonList.forEach((data, index) => {
             console.log(manad);
             if (data.Code.length === 2) {
